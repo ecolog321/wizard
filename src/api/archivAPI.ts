@@ -1,20 +1,13 @@
-
-
 export async function createArchive({
-    files,
-    access
+    files
   }: {
     files: File[];
-    access:string,
   }) {
     try {
       const response = await fetch (
         `https://createarchives.com/`,
         {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${access}`,
-          },
           body:`${files}`,
         },
 

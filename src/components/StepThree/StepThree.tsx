@@ -3,26 +3,18 @@
 import { useData } from "@/context/dataContext/hooks/useData";
 import { Button } from "../Button/Button";
 import { useRouter } from "next/navigation";
-
-declare module "react" {
-  interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
-    // extends React's HTMLAttributes
-    directory?: string;
-    webkitdirectory?: string;
-  }
-}
+import { createArchive } from "@/api/archivAPI";
 
 export const StepThree = () => {
-
-  const {format, setFormat}=useData();
- 
+  
+  const { format, setFormat, files } = useData();
   const router = useRouter();
-
+  console.log(files)
   const goToStageTwo = () => {
     router.push("/wizard/stageTwo");
   };
   const handleSubmit = () => {
-    //  createArchive();
+    createArchive(files);
     router.push("/donePage");
   };
 
@@ -32,7 +24,7 @@ export const StepThree = () => {
         <div>
           <h3>6. Задайте пароль</h3>
           <label className=" border-cyan-100 border-t cursor-pointer">
-            <input className=" text-black" type="password"  />
+            <input className=" text-black" type="password" />
           </label>
         </div>
         <div>

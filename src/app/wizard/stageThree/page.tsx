@@ -1,5 +1,9 @@
 import { StepThree } from "@/components/StepThree/StepThree";
 
 export default function StageThree() {
-    return <StepThree></StepThree>
+  return (
+    <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <StepThree />
+    </main>
+  );
 }
