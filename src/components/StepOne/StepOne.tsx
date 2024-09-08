@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "../Button/Button";
+import { useRouter } from "next/navigation";
+import { useData } from "@/context/dataContext/hooks/useData";
 
 declare module "react" {
   interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -11,47 +12,53 @@ declare module "react" {
   }
 }
 
-export const Main = () => {
-  const [isSlice, setIsSlice] = useState(false);
-  const [size, setSize] = useState("1024");
-  const [container, setContainer] = useState("MB");
+export const StepOne = () => {
+  const router = useRouter();
+
+  const { size, setSize, container, setContainer, isSlice, setIsSlice, setName } = useData();
 
   const handleCheckSlice = (e) => {
     e.target.checked ? setIsSlice(true) : setIsSlice(false);
   };
-  const goToStageTwo = () => {};
+
+  const handleName=(e)=>{
+    setName(e.target.value);
+  }
+  const goToStageTwo = () => {
+    router.push("/wizard/stageTwo");
+  };
 
   return (
     <div>
-      <h2>Для создания архива, пожалуйста, выполните следующие шаги:</h2>
       <div>
         <div>
           <h3>1. Укажите путь</h3>
           <label className=" border-cyan-100 border-t cursor-pointer">
-            <span className=" font-semibold">Выбрать путь</span>
+            <span className=" font-semibold">Открыть проводник</span>
             <input
-              className="opacity-0 -z-10"
+              className="hidden"
               type="file"
               multiple
-              onChange={(event) => console.log(event.target.files[0])}
+              webkitdirectory=""
+              directory=""
             />
           </label>
         </div>
         <div>
-          <h3>2. Имя архива</h3>
+          <h3>2. Задайте имя архива</h3>
           <label className=" border-cyan-100 border-t cursor-pointer">
-            <input placeholder="archiev" type="text" />
+            <input className="text-black" placeholder="archive" type="text" onChange={handleName} />
           </label>
         </div>
         <div>
-          <h3>3. Разбить на тома?</h3>
+          <h3>3. Разбить архив на тома?</h3>
           <label className=" border-cyan-100 border-t cursor-pointer">
             <input type="checkbox" onChange={handleCheckSlice} />
           </label>
         </div>
         {isSlice ? (
           <div>
-            <h3>Размер</h3>
+            <h3>4.Размер</h3>
             <label className=" border-cyan-100 border-t cursor-pointer">
               <select value={size} onChange={(e) => setSize(e.target.value)}>
                 <option defaultValue="512">512</option>
@@ -72,7 +79,9 @@ export const Main = () => {
           </div>
         ) : null}
       </div>
-      <Button text={"Далее"} handler={goToStageTwo}></Button>
+      <div>
+        <Button text={"Вперед"} handler={goToStageTwo}></Button>
+      </div>
     </div>
   );
 };
