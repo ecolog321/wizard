@@ -6,7 +6,7 @@ export default function DoneLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="px-16">
       {children}
     </div>
   );

@@ -5,11 +5,13 @@ import { createContext, useState } from "react";
 export const DataContext = createContext(null);
 
 export const DataProvider = ({ children }) => {
+  const [path, setPath] = useState();
   const [size, setSize] = useState("512");
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [format, setFormat] = useState("PPMd");
   const [container, setContainer] = useState("MB");
-  const [files, setFiles] = useState<FileList>();
+  const [files, setFiles] = useState([]);
   const [isSlice, setIsSlice] = useState(false);
 
   return (
@@ -26,7 +28,11 @@ export const DataProvider = ({ children }) => {
         isSlice,
         setIsSlice,
         name,
-        setName
+        setName,
+        password,
+        setPassword,
+        path,
+        setPath,
       }}
     >
       {children}
