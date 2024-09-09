@@ -48,7 +48,16 @@ export const StepOne = () => {
       : setError("Введите имя архива не менее 4 символов");
   };
 
-  return (
+
+    <div
+      className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+      role="status"
+    >
+      <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+        Loading...
+      </span>
+    </div>
+  ) : (
     <div className="flex flex-col gap-5 items-start justify-between w-full h-2/3 bg-white rounded-xl p-6 min-h-96">
       <div className="flex flex-col gap-3">
         <h3 className="text-2xl">1. Укажите путь</h3>
