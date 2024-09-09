@@ -2,12 +2,13 @@
 import { useRouter } from "next/navigation";
 import { Button } from "../Button/Button";
 
-export const Thanks = () => {
+export const Thanks: React.FC = () => {
   const router = useRouter();
   const goToStart = () => {
     router.push("/wizard");
   };
   const uploadArchive = () => {};
+
   return (
     <div className="flex flex-col gap-5 items-start justify-between w-full h-2/3 bg-white rounded-xl p-6">
       <div className="flex flex-col gap-4">

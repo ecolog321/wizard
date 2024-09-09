@@ -3,7 +3,7 @@
 import { Button } from "../Button/Button";
 import { useRouter } from "next/navigation";
 import { useData } from "@/context/dataContext/hooks/useData";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 declare module "react" {
   interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -15,40 +15,51 @@ declare module "react" {
 
 export const StepOne = () => {
   const router = useRouter();
+  const dataContext = useData();
+  const [error, setError] = useState("");
+
+  if (!dataContext) {
+    return <div>Ошибка доступа</div>;
+  }
 
   const {
     size,
     setSize,
-    container,
-    setContainer,
     isSlice,
     setIsSlice,
-    setName,
-    name,
     setPath,
     path,
-  } = useData();
+    setName,
+    name,
+    container,
+    setContainer,
+    isLoading,
+    setIsLoading,
+  } = dataContext;
 
-  const [error, setError] = useState("");
-
-  const handleCheckSlice = (e) => {
+  const handleCheckSlice = (e: ChangeEvent<HTMLInputElement>) => {
     e.target.checked ? setIsSlice(true) : setIsSlice(false);
   };
 
-  const handlePath = (e) => {
+  const handlePath = (e: ChangeEvent<HTMLInputElement>) => {
     setPath(e.target.value);
   };
 
-  const handleName = (e) => {
+  const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const goToStageTwo = () => {
-    name.length >= 4
-      ? router.push("/wizard/stageTwo")
-      : setError("Введите имя архива не менее 4 символов");
+    if (name.length >= 4) {
+      setIsLoading(true);
+      router.push("/wizard/stageTwo");
+    } else setError("Введите имя архива не менее 4 символов");
   };
 
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000);
 
+  return isLoading ? (
     <div
       className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
       role="status"
